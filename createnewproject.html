@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset = "utf-8">
+		<title>Creating New Project</title>
+        <link rel="stylesheet" href="css/projectedit.css">
+	</head>
+	<body>
+        <nav class="navBar">
+            <h2 class="logo">ProManager</h2>
+            <h2 class="bar">|</h2>
+        </nav>
+
+        <br><br>
+
+		<h1 class="pageTitle">Create New Project</h1>
+		
+        <br><br>
+
+		<form class="project-body" id="project-body">
+            <label class="pNameLabel" for="pname">Project Name:*</label><br>
+            <input class="nameInput" type="text" id="pname" name="pname" value="">
+		
+            <br><br>
+
+            <label class="projDesc" for="pdesc">Description:</label><br>
+            <textarea class="descInput" name="desc" id="pdesc" rows="10"></textarea>
+            
+            <br><br>
+
+            <label class="members">Members:</label>
+            <ul id="team-list-input">
+                <li class="team-member-input" id="team-member-input">
+                    <input class="teamInput" type="text" id="member0" name="member0" value="">
+
+                    <br>
+
+                    <!--Specifically handles the function of "Add" button-->
+                    <script type="text/javascript">
+                        //adds a new input everytime the "Add" button is clicked
+                        function add_member() {
+                            var numOfMembers = localStorage.getItem("numOfMembers");
+                            var id = "member" + numOfMembers;
+
+                            const linebreak = document.createElement('br');
+                            const li = document.getElementById('team-member-input');
+
+                            var input = document.createElement('input');
+                            input.setAttribute('class', 'teamInput');
+                            input.setAttribute('type', 'text');
+                            input.setAttribute('value', '');
+                            input.setAttribute('id', id);
+                            input.setAttribute('name', id);
+
+                            numOfMembers++;
+                            localStorage.setItem("numOfMembers", numOfMembers);
+
+                            li.appendChild(input);
+                            li.appendChild(linebreak);
+                        }
+                    </script>
+                </li>
+            </ul>
+
+            <button class="small add_member" type="button" id="add_member_button" onclick="add_member()">Add</button>
+            <button class="small delete_li" type="button" id="delete_member_button" onclick="delete_member()">Delete</button>
+
+            <br><br>
+
+            <label class="risks">Risks:</label>
+            <ol id="risk-list-input">
+                <li class="risk-input" id="risk-input">
+                    <input class="riskInput" type="text" id="risk0" name="risk0" value="">
+
+                    <br>
+
+                    <script type="text/javascript">
+                        function add_risk() {
+                            var numOfRisks = localStorage.getItem("numOfRisks");
+                            var id = "risk" + numOfRisks;
+
+                            const linebreak = document.createElement('br');
+                            const li = document.getElementById('risk-input');
+
+                            var input = document.createElement('input');
+                            input.setAttribute('class', 'riskInput');
+                            input.setAttribute('type', 'text');
+                            input.setAttribute('value', '');
+                            input.setAttribute('id', id);
+                            input.setAttribute('name', id);
+
+                            numOfRisks++;
+                            localStorage.setItem("numOfRisks", numOfRisks);
+
+                            li.appendChild(input);
+                            li.appendChild(linebreak);
+                        }
+                    </script>
+                </li>
+            </ol>
+
+            <button class="small add_risk" type="button" id="add_risk_button" onclick="add_risk()">Add</button>
+            <button class="small delete_li" type="button" id="delete_risk_button" onclick="delete_risk()">Delete</button>
+        
+            <br><br>
+        </form>
+    
+        <button class="large confirm" id="confirm_edit_button" onclick="confirm_edit()">Confirm</button>
+
+        <button class="large cancel" id="cancel_edit_button" onclick="cancel()">Cancel</button>
+	</body>
+</html>
+
+<!--Submit function which validates if at least a name is submitted for complete submission to work-->
+<!--Creates an object from the inputs, and stores it into the array-->
+<!--Cancel function for user to bring them back to index.html (home)-->
+<script type="text/javascript" defer>
+    localStorage.setItem("numOfMembers", 1);
+    localStorage.setItem("numOfRisks", 1);
+    localStorage.setItem("numOfFunctionalReqs", 1);
+    localStorage.setItem("numOfNonFunctionalReqs", 1);
+
+    //submitting the project info and creating a new project with it
+    function confirm_edit() {
+        //forcing user to give a project name for creation
+        var x = document.getElementById("pname").value;
+        if (x == "") {
+            document.querySelector(".pNameLabel").style.color = "rgb(250, 86, 86)";
+            alert("Please fill out the required field indicated by: *")
+            return false;
+        }
+
+        //creating the projectList or checking to make sure the name entered is unique
+        if(localStorage.getItem("projectList") == null) {
+            localStorage.setItem("projectList", "[]");
+        }
+        else {
+            var exists;
+            var projectList = JSON.parse(localStorage.getItem("projectList"));
+
+            projectList.forEach(function(p) {
+                if (x == p.name) {
+                    alert("A project with the name already exists!\nPlease create a project with a different name.")
+                    exists = true;
+                }
+            });
+
+            if (exists) {
+                document.querySelector(".nameInput").value = "";
+                return false;
+            }
+        }
+
+        //creating array for members
+        let memberArr = [];
+
+        for (let i = 0; i < localStorage.getItem("numOfMembers"); i++) {
+            var inputID = "member" + i;
+            memberArr[i] = document.getElementById(inputID).value;
+        }
+
+        //creating array for risks
+        let riskArr = [];
+
+        for (let i = 0; i <localStorage.getItem("numOfRisks"); i++) {
+            var inputID = "risk" + i;
+            riskArr[i] = document.getElementById(inputID).value;
+        }
+
+        let functional_req_obj = {value: '', id: '', effortTrackingEntries: []};
+        let non_functional_req_obj = {value: '', id: '', effortTrackingEntries: []};
+        let functional_reqs = [];
+        let non_functional_reqs = [];
+
+        functional_reqs.push(functional_req_obj);
+        non_functional_reqs.push(non_functional_req_obj);
+
+        //creating the project object with the values entered
+        let projObj = {
+            name: document.getElementById("pname").value,
+            description: document.getElementById("pdesc").value,
+            members: memberArr,
+            numOfMembers: localStorage.getItem("numOfMembers"),
+            risks: riskArr,
+            numOfRisks: localStorage.getItem("numOfRisks"),
+            functional_reqs: functional_reqs,
+            numOfFunctionalReqs: localStorage.getItem("numOfFunctionalReqs"),
+            non_functional_reqs: non_functional_reqs,
+            numOfNonFunctionalReqs: localStorage.getItem("numOfNonFunctionalReqs")
+        }
+
+        //storing the project object into the list of projects
+        var projArr = JSON.parse(localStorage.getItem("projectList"));
+
+        projArr.push(projObj);
+
+        localStorage.setItem("projectList", JSON.stringify(projArr));
+
+        //returning home
+        location.href = "index.html";
+    }
+    
+    //back out of process
+    function cancel() {
+        location.href = "index.html";
+    }
+</script>
