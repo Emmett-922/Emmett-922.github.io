@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset = "utf-8">
+		<title>Requirements</title>
+        <link rel="stylesheet" href="css/projectedit.css">
+        <style>
+            .f-req-inputs, .nf-req-inputs {
+                display: none;
+            }
+        </style>
+	</head>
+	<body>
+        <nav class="navBar">
+            <h2 class="logo">ProManager</h2>
+            <h2 class="bar">|</h2>
+            <ul>
+                <li>
+                    <a href="index.html">Home</a>
+                    <a href="project.html">Project Home</a>
+                    <a href="requirements.html">Requirements</a>
+                    <a href="projectedit.html">Edit Project</a>
+                    <a href="efforttracking.html">Effort Tracking</a>
+                </li>
+            </ul>
+        </nav>
+
+        <br><br>
+
+        <div class="pageHeader">
+            <h1 class="pageTitle" id="title1">Requirements</h1>
+            <h1 class="pageTitle" id="title2">Editing Requirements</h1>
+            <br><br>
+            <button class="large edit_mode" id="edit_mode_button" onclick="edit_mode()">Edit Requirements</button>
+        </div>
+		
+        <br><br>
+
+		<div class="req-body" id="req-body">
+            <label class="fReqs">Functional Requirements:</label>
+            <ol class="f-req-list" id="f-req-list">
+                <script type="text/javascript">
+                    var projID = localStorage.getItem("currentProject");
+                    var projectList = JSON.parse(localStorage.getItem("projectList"));
+                    var fReqList = [];
+                    var numOfFunctionalReqs;
+
+                    projectList.forEach(function(p) {
+                        if(projID == p.name) {
+                            fReqList = p.functional_reqs;
+                            numOfFunctionalReqs = p.numOfFunctionalReqs;
+                        }
+                    });
+                    
+                    for (let i = 0; i < numOfFunctionalReqs; i++) {
+                        var id = "f-req-list" + i;
+
+                        const ol = document.getElementById("f-req-list");
+                        var li = document.createElement('li');
+                        li.setAttribute('class', 'f-req');
+                        li.setAttribute('id', id);
+
+                        if(fReqList[i] == null) {
+                            li.innerHTML = '';
+                        }
+                        else {
+                            li.innerHTML = fReqList[i].value;
+                        }
+
+                        ol.appendChild(li);
+                    }
+                    
+                </script>
+            </ol>
+
+            <ol class="f-req-inputs" id="f-req-inputs">
+                <script type="text/javascript">
+                    if (numOfFunctionalReqs == null) {
+                        const ol = document.getElementById('f-req-inputs');
+
+                        var input = document.createElement('input');
+                        input.setAttribute('class', 'f-req-input');
+                        input.setAttribute('type', 'text');
+                        input.setAttribute('value', '');
+                        input.setAttribute('id', 'f-req-0');
+                        input.setAttribute('name', 'f-req-0');
+
+                        var li = document.createElement('li');
+                        li.appendChild(input);
+
+                        ol.appendChild(li);
+                    }
+                    else {
+                        for (let i = 0; i < numOfFunctionalReqs; i++) {
+                            var id = "f-req-" + i;
+
+                            const linebreak = document.createElement('br');
+                            const ol = document.getElementById('f-req-inputs');
+
+                            var input = document.createElement('input');
+                            input.setAttribute('class', 'f-req-input');
+                            input.setAttribute('type', 'text');
+                            input.setAttribute('value', fReqList[i].value);
+                            input.setAttribute('id', id);
+                            input.setAttribute('name', id);
+
+                            var li = document.createElement('li');
+                            li.appendChild(input);
+                            li.appendChild(linebreak);
+
+                            ol.appendChild(li);
+                        }
+                    }
+
+                    function add_fReq() {
+                        var id = "f-req-" + numOfFunctionalReqs;
+
+                        const linebreak = document.createElement('br');
+                        const ol = document.getElementById('f-req-inputs');
+
+                        var input = document.createElement('input');
+                        input.setAttribute('class', 'f-req-input');
+                        input.setAttribute('type', 'text');
+                        input.setAttribute('value', '');
+                        input.setAttribute('id', id);
+                        input.setAttribute('name', id);
+
+                        numOfFunctionalReqs++;
+                        localStorage.setItem("numOfFunctionalReqs", numOfFunctionalReqs);
+
+                        var li = document.createElement('li');
+                        li.appendChild(input);
+                        li.appendChild(linebreak);
+
+                        ol.appendChild(li);
+
+                        let fReqObj = {value: input.value, id: input.id};
+                        fReqList.push(fReqObj);
+
+                        //focusing cursor on newly added input
+                        document.getElementById(input.id).focus();
+                    }
+                </script>
+            </ol>
+
+            <button class="small add_fReq" type="button" id="add_fReq_button" onclick="add_fReq()" hidden>Add</button>
+            <button class="small delete_f_req" type="button" id="delete_f_req_button" onclick="delete_f_req()" hidden>Delete</button>
+
+                <script type="text/javascript">
+                    numOfFunctionalReqs = localStorage.getItem("numOfFunctionalReqs");
+
+                    //deletes the last non functional req in the list of f-req-inputs
+                    function delete_f_req() {
+                        if (numOfFunctionalReqs == 1) {
+                            input = document.getElementById('f-req-0');
+                            input.value = '';
+                        }
+                        else {
+                            var f_req = document.getElementById('f-req-inputs');
+                            f_req.removeChild(f_req.lastElementChild);
+                            numOfFunctionalReqs--;
+                            localStorage.setItem("numOfFunctionalReqs", numOfFunctionalReqs);
+                            fReqList.pop();
+                        }
+                    }
+                </script>
+
+            <br><br>
+
+            <label class="nfReqs">Non-Functional Requirements:</label>
+            <ol class="nf-req-list" id="nf-req-list">
+                <script>
+                    var nfReqList = [];
+                    var numOfNonFunctionalReqs;
+
+                    projectList.forEach(function(p) {
+                        if(projID == p.name) {
+                            nfReqList = p.non_functional_reqs;
+                            numOfNonFunctionalReqs = p.numOfNonFunctionalReqs;
+                        }
+                    });
+                    
+                    for (let i = 0; i < numOfNonFunctionalReqs; i++) {
+                        var id = "nf-req-list" + i;
+
+                        const ol = document.getElementById('nf-req-list');
+                        var li = document.createElement('li');
+                        li.setAttribute('class', id);
+                        li.setAttribute('id', id);
+                        
+                        if(nfReqList[i] == null) {
+                            li.innerHTML = '';
+                        }
+                        else {
+                            li.innerHTML = nfReqList[i].value;
+                        }
+
+                        ol.appendChild(li);
+                    }
+                    
+                </script>
+            </ol>
+
+            <ol class="nf-req-inputs" id="nf-req-inputs">
+                <script type="text/javascript">
+                    if (numOfNonFunctionalReqs == null) {
+                        const ol = document.getElementById('nf-req-inputs');
+
+                        var input = document.createElement('input');
+                        input.setAttribute('class', 'nf-req-input');
+                        input.setAttribute('type', 'text');
+                        input.setAttribute('value', '');
+                        input.setAttribute('id', 'nf-req-0');
+                        input.setAttribute('name', 'nf-req-0');
+
+                        var li = document.createElement('li');
+                        li.appendChild(input);
+
+                        ol.appendChild(li);
+                    }
+                    else {
+                        for (let i = 0; i < numOfNonFunctionalReqs; i++) {
+                            var id = "nf-req-" + i;
+
+                            const linebreak = document.createElement('br');
+                            const ol = document.getElementById('nf-req-inputs');
+
+                            var input = document.createElement('input');
+                            input.setAttribute('class', 'nf-req-input');
+                            input.setAttribute('type', 'text');
+                            input.setAttribute('value', nfReqList[i].value);
+                            input.setAttribute('id', id);
+                            input.setAttribute('name', id);
+
+                            var li = document.createElement('li');
+                            li.appendChild(input);
+                            li.appendChild(linebreak);
+
+                            ol.appendChild(li);
+                        }
+                    }
+
+                    function add_nfReq() {
+                        var id = "nf-req-" + numOfNonFunctionalReqs;
+
+                        const linebreak = document.createElement('br');
+                        const ol = document.getElementById('nf-req-inputs');
+
+                        var input = document.createElement('input');
+                        input.setAttribute('class', 'nf-req-input');
+                        input.setAttribute('type', 'text');
+                        input.setAttribute('value', '');
+                        input.setAttribute('id', id);
+                        input.setAttribute('name', id);
+
+                        numOfNonFunctionalReqs++;
+                        localStorage.setItem("numOfNonFunctionalReqs", numOfNonFunctionalReqs);
+
+                        var li = document.createElement('li');
+                        li.appendChild(input);
+                        li.appendChild(linebreak);
+
+                        ol.appendChild(li);
+
+                        let nfReqObj = {value: input.value, id: input.id};
+                        nfReqList.push(nfReqObj);
+
+                        //focusing cursor on newly added input
+                        document.getElementById(input.id).focus();
+                    }
+                </script>
+            </ol>
+
+            <button class="small add_nfReq" type="button" id="add_nfReq_button" onclick="add_nfReq()" hidden>Add</button>
+            <button class="small delete_nf_req" type="button" id="delete_nf_req_button" onclick="delete_nf_req()" hidden>Delete</button>
+            
+                <script type="text/javascript">
+                    numOfNonFunctionalReqs = localStorage.getItem("numOfNonFunctionalReqs");
+
+                    //deletes the last non functional req in the list of nf-req-inputs
+                    function delete_nf_req() {
+                        if (numOfNonFunctionalReqs == 1) {
+                            input = document.getElementById('nf-req-0');
+                            input.value = '';
+                        }
+                        else {
+                            var nf_req = document.getElementById('nf-req-inputs');
+                            nf_req.removeChild(nf_req.lastElementChild);
+                            numOfNonFunctionalReqs--;
+                            localStorage.setItem("numOfNonFunctionalReqs", numOfNonFunctionalReqs);
+                            nfReqList.pop();
+                        }
+                    }
+                </script>
+
+            <br><br>
+
+            <button class="large confirm" id="confirm_edit_button" onclick="confirm_edit()" hidden>Confirm</button>
+
+            <button class="large cancel" id="cancel_edit_button" onclick="cancel()" hidden>Cancel</button>
+        </div>
+	</body>
+</html>
+
+<script type="text/javascript">
+    var t2 = document.getElementById('title2'),
+        addFR = document.getElementById('add_fReq_button'),
+        addNFR = document.getElementById('add_nfReq_button');
+        conf = document.getElementById('confirm_edit_button');
+        canc = document.getElementById('cancel_edit_button');
+        fReqOL1 = document.getElementById('f-req-list');
+        nfReqOL1 = document.getElementById('nf-req-list');
+        fReqOL2 = document.getElementById('f-req-inputs');
+        nfReqOL2 = document.getElementById('nf-req-inputs');
+        del1 = document.getElementById('delete_f_req_button');
+        del2 = document.getElementById('delete_nf_req_button');
+    t2.style.display = "none";
+
+
+    function edit_mode() {
+        var t1 = document.getElementById('title1');
+        t1.style.display = "none";
+        fReqOL1.style.display = "none";
+        nfReqOL1.style.display = "none";
+
+        t2.style.display = "block";
+        addFR.removeAttribute('hidden');
+        addNFR.removeAttribute('hidden');
+        conf.removeAttribute('hidden');
+        canc.removeAttribute('hidden');
+        del1.removeAttribute('hidden');
+        del2.removeAttribute('hidden');
+        fReqOL2.style.display = "block";
+        nfReqOL2.style.display = "block";
+    }
+
+    //confirm the edits made to the project
+    function confirm_edit(){
+        var projID = localStorage.getItem("currentProject");
+        var projectList = JSON.parse(localStorage.getItem("projectList"));
+
+        projectList.forEach(function(p) {
+            if (projID == p.name) {
+                p.functional_reqs = fReqList;
+                p.non_functional_reqs = nfReqList;
+
+                for (let i = 0; i < numOfFunctionalReqs; i++) {
+                    var funcID = "f-req-" + i;
+                    p.functional_reqs[i].value = document.getElementById(funcID).value;
+                    p.functional_reqs[i].id = funcID;
+                }
+
+                for (let i = 0; i < numOfNonFunctionalReqs; i++) {
+                    var nonFuncID = "nf-req-" + i;
+                    p.non_functional_reqs[i].value = document.getElementById(nonFuncID).value;
+                    p.non_functional_reqs[i].id = nonFuncID;
+                }
+
+                p.numOfFunctionalReqs = numOfFunctionalReqs;
+                p.numOfNonFunctionalReqs = numOfNonFunctionalReqs;
+            }
+        });
+
+        localStorage.setItem("projectList", JSON.stringify(projectList));
+
+        location.href = "requirements.html";
+    }
+
+    //back out of editing process
+    function cancel() {
+        location.href = "requirements.html";
+    }
+</script>

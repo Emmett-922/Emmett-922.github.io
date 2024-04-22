@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset = "utf-8">
+		<title>Project</title>
+        <link rel="stylesheet" href="css/project.css">
+	</head>
+	<body>
+        <nav class="navBar">
+            <h2 class="logo">ProManager</h2>
+            <h2 class="bar">|</h2>
+            <ul>
+                <li>
+                    <a href="index.html">Home</a>
+                    <a href="project.html">Project Home</a>
+                    <a href="requirements.html">Requirements</a>
+                    <a href="projectedit.html">Edit Project</a>
+                    <a href="efforttracking.html">Effort Tracking</a>
+                </li>
+            </ul>
+        </nav>
+
+        <br><br>
+		
+        <!--Creating page title by getting the ID of the current project-->
+        <script type="text/javascript">
+            var projID = localStorage.getItem("currentProject");
+            var projectName = document.createElement('h1');
+            projectName.setAttribute('class', 'pageTitle');
+            projectName.innerHTML = projID;
+            document.body.appendChild(projectName);
+        </script>
+		
+        <br><br>
+
+		<div class="project-body" id="project-body">
+            <h3>Project Description&#58;</h3>
+            <!--Importing project description of currently selected project into the first paragraph-->
+            <script type="text/javascript">
+                var projID = localStorage.getItem("currentProject");
+                var projectList = JSON.parse(localStorage.getItem("projectList"));
+                var proj_desc;
+
+                projectList.forEach(function(p){
+                    if(p.name == projID) {
+                        proj_desc = p.description;
+                    }
+                });
+
+                const div = document.querySelector(".project-body");
+                
+                var projDescription = document.createElement('p');
+                projDescription.setAttribute('class', 'descPara');
+                projDescription.innerHTML = proj_desc;
+                div.appendChild(projDescription);
+
+            </script>
+
+            <br><br>
+
+            <h3>Team Members&#58;</h3>
+            <ul id="team-list">
+                <script type="text/javascript">
+                    var projID = localStorage.getItem("currentProject");
+                    var projectList = JSON.parse(localStorage.getItem("projectList"));
+                    var memberList = [];
+                    var count;
+
+                    projectList.forEach(function(p){
+                        if(projID == p.name) {
+                            memberList = p.members;
+                            count = p.numOfMembers;
+                        }
+                    });
+
+                    for (let i = 0; i < count; i++) {
+                        var id = "member" + i;
+
+                        const ul = document.getElementById('team-list');
+                        var li = document.createElement('li');
+                        li.setAttribute('class', id);
+                        li.setAttribute('id', id);
+                        li.innerHTML = memberList[i];
+
+                        ul.appendChild(li);
+                    }
+                </script>
+            </ul>
+
+            <br><br>
+
+            <h3>Risk List&#58;</h3>
+            <ol id="risk-list">
+                <script type="text/javascript">
+                    var projID = localStorage.getItem("currentProject");
+                    var projectList = JSON.parse(localStorage.getItem("projectList"));
+                    var riskList = [];
+                    var count;
+
+                    projectList.forEach(function(p){
+                        if(projID == p.name) {
+                            riskList = p.risks;
+                            count = p.numOfRisks;
+                        }
+                    });
+
+                    for (let i = 0; i < count; i++) {
+                        var id = "risk" + i;
+
+                        const ol = document.getElementById('risk-list');
+                        var li = document.createElement('li');
+                        li.setAttribute('class', id);
+                        li.setAttribute('id', id);
+                        li.innerHTML = riskList[i];
+
+                        ol.appendChild(li);
+                    }
+                </script>
+            </ol>
+        </div>
+	</body>
+</html>

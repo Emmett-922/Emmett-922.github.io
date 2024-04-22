@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset = "utf-8">
+		<title>Home</title>
+        <link rel="stylesheet" href="css/projectedit.css">
+        <style>
+            .home-body p{
+                margin-left: 100px;
+                margin-bottom: 10px;
+                font-size: 33px;
+                text-decoration: underline;
+                text-decoration-color: orangered;
+            }
+
+            .project_list_section ol{
+                list-style-type: none;
+                background-color: rgb(20, 20, 20);
+                padding: 10px;
+                margin-left: 100px;
+                margin-right: 100px;
+                box-shadow: 3px 4px black;
+            }
+
+            .project_list_section li a{
+                color: white;
+                font-size: 23px;
+                text-decoration: none;
+                display: block;
+                padding-top: 10px;
+                padding-bottom: 10px;
+            }
+
+            .project_list_section li a:hover{
+                background-color: rgb(33, 33, 33);
+                color: orangered;
+                text-decoration: underline;
+                cursor: pointer;
+            }
+        </style>
+	</head>
+	<body>
+        <nav class="navBar">
+            <h2 class="logo">ProManager</h2>
+            <h2 class="bar">|</h2>
+        </nav>
+
+        <br><br>
+
+        <div class="pageHeader">
+            <h1 class="pageTitle">Projects</h1>
+            <br><br>
+            <button class="large create_new_button" id="new_proj_button" onclick="go_to_new_proj()">Create New Project</button>
+        </div>
+		
+        <br><br>
+
+		<div class="home-body" id="home-body">
+            <p>
+				My Projects:
+			</p>
+
+            <div class="project_list_section">
+                <ol class="project-list" id="project-list">
+                    <li class="project">
+                        <!--For each project object in the list of projects, create an anchor link to project.html with the name of the project-->
+                        <!--Each link ID is set to the name of each respective project-->
+                        <!--Each link has onclick function, passing the ID to store the name of the selected project in the localStorage for the other pages to use-->
+                        <script type="text/javascript">
+                            if(localStorage.getItem("projectList") != null) {
+                                var projectList = JSON.parse(localStorage.getItem("projectList"));
+
+                                const li = document.querySelector('li');
+                                
+                                projectList.forEach(function(p){
+                                    var projID = p.name;
+
+                                    var link = document.createElement('a');
+                                    link.innerHTML = projID;
+                                    link.setAttribute('href', "project.html");
+                                    link.setAttribute('id', projID);
+                                    link.setAttribute('onclick', 'go_to_proj_home(this.id)');
+                                    li.appendChild(link);
+                                });
+                            }
+                        </script>
+                    </li>
+                </ol>
+            </div>
+        </div>
+	</body>
+</html>
+
+<!--Function for the Create New Project Button-->
+<!--Other function to create a currentProject variable which stores the ID of the currently selected project-->
+<script type="text/javascript">
+    function go_to_new_proj(){
+        location.href = "createnewproject.html";
+    }
+
+    function go_to_proj_home(selected) {
+        if(localStorage.getItem("currentProject") == null) {
+            localStorage.setItem("currentProject", "");
+        }
+
+        localStorage.setItem("currentProject", selected);
+
+        var projectList = projectList = JSON.parse(localStorage.getItem("projectList"));
+
+        projectList.forEach(function(p){
+            if (selected == p.name){
+                localStorage.setItem("numOfMembers", p.numOfMembers);
+                localStorage.setItem("numOfRisks", p.numOfRisks);
+            }
+        })
+    }
+</script>

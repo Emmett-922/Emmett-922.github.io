@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Effort Tracking Details</title>
+        <link rel="stylesheet" href="css/efforttrackingdetails.css">
+    </head>
+    <body>
+        <nav class="navBar">
+            <h2 class="logo">ProManager</h2>
+            <h2 class="bar">|</h2>
+            <ul>
+                <li>
+                    <a href="index.html">Home</a>
+                    <a href="project.html">Project Home</a>
+                    <a href="requirements.html">Requirements</a>
+                    <a href="projectedit.html">Edit Project</a>
+                    <a href="efforttracking.html">Effort Tracking</a>
+                </li>
+            </ul>
+        </nav>
+
+        <br><br>
+
+        <div class="pageHeader">
+            <h1 class="pageTitle">Effort Tracking Details</h1>
+            <br><br>
+        </div>
+
+        <div class="details_section">
+            <label class="time_basis_label">Time Basis:</label>
+            <br>
+            <input class="time_basis_option" name="time_basis_option" id="daily_option" type="radio">Daily</input>
+            <br>
+            <input class="time_basis_option" name="time_basis_option" id="weekly_option" type="radio">Weekly</input>
+
+            <br><br><br>
+
+            <label class="task_effort_label">Effort For Each Task (in number of person-hours, input number only)</label>
+            <ul class="task_effort_list" id="task_effort_list">
+                <li class="req_analysis" id="req_analysis">Requirement Analysis:
+                    <br>
+                    <input class="req_analysis_input" id="req_analysis_input" value=""></input>
+                </li>
+                <li class="designing" id="designing">Designing:
+                    <br>
+                    <input class="designing_input" id="designing_input" value=""></input>
+                </li>
+                <li class="coding" id="coding">Coding:
+                    <br>
+                    <input class="coding_input" id="coding_input" value=""></input>
+                </li>
+                <li class="testing" id="testing">Testing:
+                    <br>
+                    <input class="testing_input" id="testing_input" value=""></input>
+                </li>
+                <li class="proj_management" id="proj_management">Project Management:
+                    <br>
+                    <input class="proj_management_input" id="proj_management_input" value=""></input>
+                </li>
+            </ul>
+
+            <br>&nbsp;
+
+            <form class="requirement_selection" id="requirement_selection" name="requirement_selection">
+                <label class="requirement_selection_label" id="requirement_selection_label">Select Requirement:</label>
+                <br><br>
+                <input type="radio" class="req_type_option" name="req_type_option" id="f_req_box">&nbsp;&nbsp;Functional Requirement&nbsp;&nbsp;
+                    <select class="f_requirements" id="f_requirements" name="f_requirements">
+                        <script type="text/javascript">
+                            var projID = localStorage.getItem("currentProject");
+                            var projectList = JSON.parse(localStorage.getItem("projectList"));
+                            var fReqList = [];
+                            var chosenF;
+                            var fORnf;
+
+                            projectList.forEach(function(p){
+                                if (projID == p.name){
+                                    fReqList = p.functional_reqs;
+                                }
+                            });
+
+                            const f_req_dropDown = document.getElementById("f_requirements");
+
+                            for (let i = 0; i < fReqList.length; i++) {
+                                var option = document.createElement('option');
+                                option.setAttribute('value', fReqList[i].id);
+                                option.setAttribute('id', fReqList[i].id);
+                                option.innerHTML = fReqList[i].value;
+                                f_req_dropDown.appendChild(option);
+
+                                option.onclick = function() {
+                                    chosenF = fReqList[i].id;
+                                    fORnf = "functional";
+                                }
+                            }
+                        </script>
+                    </select>
+                </input>
+
+                <br><br>
+
+                <input type="radio" class="req_type_option" name="req_type_option" id="nf_req_box">&nbsp;&nbsp;Non-Functional Requirement&nbsp;&nbsp;
+                    <select class="nf_requirements" id="nf_requirements" name="nf_requirements">
+                        <script type="text/javascript">
+                            var nfReqList = [];
+                            var chosenNF;
+
+                            projectList.forEach(function(p){
+                                if(projID == p.name){
+                                    nfReqList = p.non_functional_reqs;
+                                }
+                            });
+
+                            const nf_req_dropDown = document.getElementById("nf_requirements");
+
+                            for (let i = 0; i < nfReqList.length; i++) {
+                                option = document.createElement('option');
+                                option.setAttribute('value', nfReqList[i].id);
+                                option.setAttribute('id', nfReqList[i].id);
+                                option.innerHTML = nfReqList[i].value;
+                                nf_req_dropDown.appendChild(option);
+
+                                option.onclick = function() {
+                                    chosenNF = nfReqList[i].id;
+                                    fORnf = "non-functional";
+                                }
+                            }
+                        </script>
+                    </select>
+                </input>
+            </form>
+
+            <br><br>
+
+            <button class="submit_button" id="submit_button" onclick="submit_details()">Submit Details</button>
+            <button class="cancel" id="cancel_button" onclick="cancel()">Cancel</button>
+        </div>
+    </body>
+</html>
+
+<script type="text/javascript">
+    var timeBasis;
+
+    //changing the value of timeBasis per the selected radio button
+    document.getElementById("daily_option").onclick = function(){
+        timeBasis = "daily";
+        console.log(timeBasis);
+    }
+    document.getElementById("weekly_option").onclick = function(){
+        timeBasis = "weekly";
+        console.log(timeBasis);
+    }
+
+    //drop down menu visibility changes depending on which requirement option is chosen
+    document.getElementById("f_req_box").onclick = function(){
+        document.getElementById("f_requirements").style.display = "inline";
+
+        document.getElementById("nf_requirements").style.display = "none";
+    }
+    document.getElementById("nf_req_box").onclick = function(){
+        document.getElementById("nf_requirements").style.display = "inline";
+
+        document.getElementById("f_requirements").style.display = "none";
+    }
+
+
+
+    function submit_details() {
+        var count;
+        var selectedFReq;
+        var selectedNFReq;
+        var reqList;
+        var isFunctional;
+
+        projectList.forEach(function(p){
+            if (projID == p.name) {
+                if(fORnf == "functional") {
+                    isFunctional = true;
+                    reqList = p.functional_reqs;
+                    reqList.forEach(function(r){
+                        if (r.id == chosenF) {
+                            selectedFReq = reqList.effortTrackingEntries;
+                            count = selectedFReq.length;
+                        }
+                    });
+                }
+                else if (fORnf == "non-functional"){
+                    isFunctional = false;
+                    reqList = p.non_functional_reqs;
+                    reqList.forEach(function(r){
+                        if (r.id == chosenNF) {
+                            selectedNFReq = reqList.effortTrackingEntries;
+                            count = selectedNFReq.length;
+                        }
+                    });
+                }
+                else {
+                    alert("You must submit the details for either a functional or non-function requirement!");
+                }
+            }
+        });
+
+        if(count == null) {
+            var entryID = "entry0";
+        }
+        else {
+            entryID = "entry" + count;
+        }
+
+        let efforttrackingdetailsEntry = {
+            time: timeBasis,
+            id: entryID,
+            reqAnalysisHours: document.getElementById("req_analysis_input").value,
+            designingHours: document.getElementById("designing_input").value,
+            codingHours: document.getElementById("coding_input").value,
+            testingHours: document.getElementById("testing_input").value,
+            projManagementHours: document.getElementById("proj_management_hours").value
+        }
+
+        if(isFunctional){
+            selectedFReq.push(efforttrackingdetailsEntry);
+        }
+        else{
+            selectedNFReq.push(efforttrackingdetailsEntry);
+        }
+
+        projectList.forEach(function(p){
+            if(projID == p.name) {
+                if(isFunctional){
+                    selectedFReq.push(efforttrackingdetailsEntry);
+                    p.functional_reqs.forEach(function(r){
+                        if(r.id == chosenF){
+                            r.effortTrackingEntries = selectedFReq;
+                        }
+                    });
+                }
+                else{
+                    selectedNFReq.push(efforttrackingdetailsEntry);
+                    p.non_functional_reqs.forEach(function(r){
+                        if(r.id == chosenNF){
+                            r.effortTrackingEntries = selectedNFReq;
+                        }
+                    })
+                }
+            }
+        });
+    }
+
+    function cancel() {
+        location.href = "efforttracking.html";
+    }
+</script>
