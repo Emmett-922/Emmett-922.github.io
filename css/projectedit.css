@@ -1,0 +1,195 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+    color: whitesmoke;
+    background-color: rgb(33, 33, 33);
+}
+
+/***   NAVIGATION MENU RULES   ***/
+.navBar{
+    background-color: rgb(61, 61, 61);
+    overflow: hidden;
+    width: 100%;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.5);
+    padding: 15px;
+    margin: 0px;
+    display: inline-flex;
+    align-items: baseline;
+}
+
+.logo{
+    color: rgba(228, 115, 75, 0.671);
+    text-shadow: 1px 1px 2px black;
+    cursor: default;
+}
+
+.bar{
+    padding-left: 10px;
+    color: black;
+    cursor: default;
+}
+
+/***   HEADER RULES   ***/
+.pageHeader{
+    text-align: center;
+    align-items: baseline;
+    padding: 15px;
+    margin-right: 35px;
+}
+
+.pageTitle{
+    text-align: center;
+    font-size: 50px;
+    cursor: default;
+    padding-top: 15px;
+}
+
+h1 {
+    color:white;
+}
+
+/* give section headings space beneath them to improve readability */
+h3 {
+    padding-bottom: 10px;
+}
+
+/***   BODY RULES   ***/
+/* give project body 20% margins on either side. width is edited in case of % values being used on internal elements */
+#project-body {
+    margin-left: 20%;
+    width: 60%;
+}
+
+/* give requirements body 10% margins on either side. width is edited in case of % values being used on internal elements */
+#req-body {
+    margin-left: 10%;
+    width: 80%;
+}
+
+/***   LIST RULES   ***/
+ul {
+    list-style: none;
+    display: inline;
+    font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+    overflow: hidden;
+}
+
+/* add inline padding to the list used in the navbar */
+.navBar ul {
+    padding-inline-start: 30px;
+}
+
+/* remove style from link and input lists */
+ol.project-list, form ol{
+    list-style-type: none;
+}
+
+/* give list items better spacing for readability */
+li {
+    margin-left: 30px;
+    padding-bottom: 10px;
+}
+
+li a {
+    color: white;
+    font-size: 20px;
+    text-decoration: none;
+    padding-inline: 30px;
+}
+
+li a:hover {
+    color: rgba(228, 115, 75, 0.671);
+    text-decoration: underline;
+}
+
+/***   FORM RULES   ***/
+/* all labels use the same rules */
+label {
+    font-size: 20px;
+}
+
+/* all text input uses multiple shared rules */
+input[type="text"], textarea{
+    padding: 5px;
+    margin-top: 5px;
+    background-color: rgb(100, 100, 100);
+    color: white;
+    border-radius: 10px;
+    border: none;
+    width: 25%;
+}
+
+/* text input vary in width based on type */
+input[type="text"]{
+    width: 25%;
+}
+
+textarea{
+    width: 50%;
+}
+
+/* all text input uses the same hover rules */
+input[type="text"]:hover, textarea:hover {
+    background-color: rgb(70, 70, 70);
+}
+
+/***   BUTTON RULES   ***/
+/* all buttons use the same color/font rules */
+button {
+    background-color: orangered;
+    border: none;
+    color: black;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: rgb(20, 20, 20);
+    color: white;
+    cursor: pointer;
+}
+
+/* all small buttons (add/delete list items) use the same border/padding rules */
+.small {
+    padding: 5px;
+    border-radius: 5px;
+}
+
+/* all large buttons (confirm/delete project) use the same border/padding rules */
+.large {
+    font-size: 15px;
+    padding: 10px;
+    border-radius: 20px;
+    padding-inline: 15px;
+}
+
+/* some buttons have unique positioning rules */
+.create_new_button, .edit_mode {
+    margin-right: 10%;
+    float: right;
+}
+
+.delete_li {
+    margin-left: 15%;
+}
+
+.confirm {
+    margin-left: 20%;
+}
+
+#req-body .confirm {
+    margin-left: 0%;
+}
+
+.cancel {
+    margin-left: 10px;
+}
+
+.delete_project {
+    margin-right: 20%;
+    float: right;
+}

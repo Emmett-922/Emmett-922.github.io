@@ -1,0 +1,87 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+
+body {
+    font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+    color: whitesmoke;
+    background-color: rgb(33, 33, 33);
+    cursor: default;
+}
+
+/* give project body 20% margins on either side. width is edited in case of % values being used on internal elements */
+#project-body {
+    margin-left: 20%;
+    width: 60%;
+}
+
+.navBar {
+    background-color: rgb(61, 61, 61);
+    overflow: hidden;
+    width: 100%;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,.5);
+    padding: 15px;
+    margin: 0px;
+    display: inline-flex;
+    align-items: baseline;
+}
+
+.logo {
+    color: rgba(228, 115, 75, 0.671);
+    text-shadow: 1px 1px 2px black;
+    cursor: default;
+}
+
+.bar {
+    padding-left: 10px;
+    color: black;
+    cursor: default;
+}
+
+ul {
+    list-style: none;
+    display: inline;
+    font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+    padding-inline-start: 30px;
+    overflow: hidden;
+}
+
+/* give ordered list the same indentaion as unordered list */
+ol {
+    padding-inline-start: 30px;
+}
+
+/* give list items better spacing for readability */
+li {
+    margin-left: 15px;
+    padding-bottom: 10px;
+}
+
+li a {
+    color: white;
+    font-size: 20px;
+    text-decoration: none;
+    padding-inline: 30px;
+}
+
+li a:hover {
+    color: rgba(228, 115, 75, 0.671);
+    text-decoration: underline;
+}
+
+.pageTitle {
+    text-align: center;
+    font-size: 50px;
+    cursor: default;
+    padding-top: 15px;
+}
+
+h1 {
+    color:white;
+}
+
+/* give section headings space beneath them to improve readability */
+h3 {
+    padding-bottom: 10px;
+}
