@@ -177,29 +177,31 @@
         var selectedFReq;
         var selectedNFReq;
         var reqList;
+        var f;
+        var nf;
         
         //searching list for chosen requirement
         projectList.forEach(function(p){
             if (projID == p.name) {
                 if(isFunctional == 0) {
-                    var f = document.getElementById("f_requirements");
+                    f = document.getElementById("f_requirements");
                     reqList = p.functional_reqs;
                     console.log(f.value);
 
                     reqList.forEach(function(r){
                         if (r.id == f.value) {
-                            selectedFReq = reqList.effortTrackingEntries;
+                            selectedFReq = r.effortTrackingEntries;
                             count = selectedFReq.length;
                         }
                     });
                 }
                 else if (isFunctional == 1){
-                    var nf = document.getElementById("nf_requirements");
+                    nf = document.getElementById("nf_requirements");
                     reqList = p.non_functional_reqs;
 
                     reqList.forEach(function(r){
                         if (r.id == nf.value) {
-                            selectedNFReq = reqList.effortTrackingEntries;
+                            selectedNFReq = r.effortTrackingEntries;
                             count = selectedNFReq.length;
                         }
                     });
@@ -224,7 +226,7 @@
             designingHours: document.getElementById("designing_input").value,
             codingHours: document.getElementById("coding_input").value,
             testingHours: document.getElementById("testing_input").value,
-            projManagementHours: document.getElementById("proj_management_hours").value
+            projManagementHours: document.getElementById("proj_management_input").value
         }
 
         projectList.forEach(function(p){
@@ -247,6 +249,11 @@
                 }
             }
         });
+
+        localStorage.setItem("projectList", JSON.stringify(projectList));
+
+        location.href = "efforttrackingdetails.html";
+
     }
 
     function cancel() {
