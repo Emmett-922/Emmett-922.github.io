@@ -85,6 +85,7 @@
                             for (let i = 0; i < fReqList.length; i++) {
                                 var option = document.createElement('option');
                                 option.setAttribute('value', fReqList[i].id);
+                                option.setAttribute('class', "dropDownOption");
                                 option.setAttribute('id', fReqList[i].id);
                                 option.innerHTML = fReqList[i].value;
                                 f_req_dropDown.appendChild(option);
@@ -117,6 +118,7 @@
                             for (let i = 0; i < nfReqList.length; i++) {
                                 option = document.createElement('option');
                                 option.setAttribute('value', nfReqList[i].id);
+                                option.setAttribute('class', "dropDownOption");
                                 option.setAttribute('id', nfReqList[i].id);
                                 option.innerHTML = nfReqList[i].value;
                                 nf_req_dropDown.appendChild(option);
@@ -141,6 +143,7 @@
 
 <script type="text/javascript">
     var timeBasis;
+    var isFunctional = null;
 
     //changing the value of timeBasis per the selected radio button
     document.getElementById("daily_option").onclick = function(){
@@ -157,13 +160,16 @@
         document.getElementById("f_requirements").style.display = "inline";
 
         document.getElementById("nf_requirements").style.display = "none";
+
+        isFunctional = 0;
     }
     document.getElementById("nf_req_box").onclick = function(){
         document.getElementById("nf_requirements").style.display = "inline";
 
         document.getElementById("f_requirements").style.display = "none";
-    }
 
+        isFunctional = 1;
+    }
 
 
     function submit_details() {
@@ -171,26 +177,28 @@
         var selectedFReq;
         var selectedNFReq;
         var reqList;
-        var isFunctional;
-
+        
         //searching list for chosen requirement
         projectList.forEach(function(p){
             if (projID == p.name) {
-                if(fORnf == "functional") {
-                    isFunctional = true;
+                if(isFunctional == 0) {
+                    var f = document.getElementById("f_requirements");
                     reqList = p.functional_reqs;
+                    console.log(f.value);
+
                     reqList.forEach(function(r){
-                        if (r.id == chosenF) {
+                        if (r.id == f.value) {
                             selectedFReq = reqList.effortTrackingEntries;
                             count = selectedFReq.length;
                         }
                     });
                 }
-                else if (fORnf == "non-functional"){
-                    isFunctional = false;
+                else if (isFunctional == 1){
+                    var nf = document.getElementById("nf_requirements");
                     reqList = p.non_functional_reqs;
+
                     reqList.forEach(function(r){
-                        if (r.id == chosenNF) {
+                        if (r.id == nf.value) {
                             selectedNFReq = reqList.effortTrackingEntries;
                             count = selectedNFReq.length;
                         }
@@ -201,7 +209,7 @@
                 }
             }
         });
-
+        
         if(count == null) {
             var entryID = "entry0";
         }
@@ -219,19 +227,12 @@
             projManagementHours: document.getElementById("proj_management_hours").value
         }
 
-        if(isFunctional){
-            selectedFReq.push(efforttrackingdetailsEntry);
-        }
-        else{
-            selectedNFReq.push(efforttrackingdetailsEntry);
-        }
-
         projectList.forEach(function(p){
             if(projID == p.name) {
-                if(isFunctional){
+                if(isFunctional == 0){
                     selectedFReq.push(efforttrackingdetailsEntry);
                     p.functional_reqs.forEach(function(r){
-                        if(r.id == chosenF){
+                        if(r.id == f.value){
                             r.effortTrackingEntries = selectedFReq;
                         }
                     });
@@ -239,7 +240,7 @@
                 else{
                     selectedNFReq.push(efforttrackingdetailsEntry);
                     p.non_functional_reqs.forEach(function(r){
-                        if(r.id == chosenNF){
+                        if(r.id == nf.value){
                             r.effortTrackingEntries = selectedNFReq;
                         }
                     })
