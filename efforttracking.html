@@ -27,6 +27,56 @@
             <br><br>
             <button class="enter_details" id="enter_details_button" onclick="go_to_effort_entering_page()">Enter Details</button>
         </div>
+
+        <div class="display_section">
+            <h2>Effort Towards Functional Requirements</h2>
+
+                <input class="fReq_effort_display_option" name="fReq_effort_display_option" id="fReq_total_option" type="radio" checked>&nbsp;&nbsp;Total Effort&nbsp;&nbsp;&nbsp;&nbsp;</input>
+                <input class="fReq_effort_display_option" name="fReq_effort_display_option" id="fReq_average_daily_option" type="radio">&nbsp;&nbsp;Average Daily Effort&nbsp;&nbsp;&nbsp;&nbsp;</input>
+                <input class="fReq_effort_display_option" name="fReq_effort_display_option" id="fReq_average_weekly_option" type="radio">&nbsp;&nbsp;Average Weekly Effort&nbsp;&nbsp;&nbsp;&nbsp;</input>
+
+            <div class="reqCharts" id="fReqCharts">
+                <script type="text/javascript">
+                    var projID = localStorage.getItem("currentProject");
+                    var projectList = JSON.parse(localStorage.getItem("projectList"));
+                    var fReqList = [];
+
+                    
+                    projectList.forEach(function(p){
+                        if(projID == p.name) {
+                            fReqList = p.functional_reqs;
+                            for(let i = 0; i < fReqList.length; i++) {
+                                const div = document.getElementById('fReqCharts');
+                                var canvasID = "canvas-f-req-" + i;
+                                console.log(canvasID);
+
+                                var canvas = document.createElement('canvas');
+                                canvas.setAttribute('class', 'fReqChartCanvas');
+                                canvas.setAttribute('id', canvasID);
+                                canvas.setAttribute('style', 'width:100%;max-width:700px');
+
+                                div.appendChild(canvas);
+                            }
+                        }
+                    });
+                    
+                </script>
+            </div>
+
+            <br><br><br>
+
+            <h2>Effort Towards Non-Functional Requirements</h2>
+
+            <input class="nfReq_effort_display_option" name="nfReq_effort_display_option" id="nfReq_total_option" type="radio" checked>&nbsp;&nbsp;Total Effort&nbsp;&nbsp;&nbsp;&nbsp;</input>
+            <input class="nfReq_effort_display_option" name="nfReq_effort_display_option" id="nfReq_average_daily_option" type="radio">&nbsp;&nbsp;Average Daily Effort&nbsp;&nbsp;&nbsp;&nbsp;</input>
+            <input class="nfReq_effort_display_option" name="nfReq_effort_display_option" id="nfReq_average_weekly_option" type="radio">&nbsp;&nbsp;Average Weekly Effort&nbsp;&nbsp;&nbsp;&nbsp;</input>
+
+            <div class="reqCharts" id="nfReqCharts">
+                <script type="text/javascript">
+                    
+                </script>
+            </div>
+        </div>
     </body>
 </html>
 
