@@ -65,7 +65,7 @@ h3 {
 }
 
 /* give requirements body 10% margins on either side. width is edited in case of % values being used on internal elements */
-#req-body, .display_section {
+#req-body, .display_section, .details_section {
     margin-left: 10%;
     width: 80%;
 }
