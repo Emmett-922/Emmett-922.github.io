@@ -201,7 +201,7 @@ button:hover {
     margin-left: 20%;
 }
 
-#req-body .confirm {
+#req-body .confirm, .details_section .confirm {
     margin-left: 0%;
 }
 
