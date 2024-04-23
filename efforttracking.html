@@ -40,6 +40,7 @@
 
             <br>
 
+            <!--Graphs of Total Person Hours for all Functional Requirements-->
             <div class="reqCharts" id="fReqTotalEffortCharts" style="width:100%;max-width:700px">
                 <script type ="text/javascript">
                     var projID = localStorage.getItem("currentProject");
@@ -141,6 +142,7 @@
 
             <br>
 
+            <!--Graphs of Average Daily Person Hours for all Functional Requirements-->
             <div class="reqCharts" id="fReqAvgDailyEffortCharts" style="width:100%;max-width:700px">
                 <script type ="text/javascript">
                     var projID = localStorage.getItem("currentProject");
@@ -248,6 +250,7 @@
 
             <br>
 
+            <!--Graphs of Average Weekly Person Hours for all Functional Requirements-->
             <div class="reqCharts" id="fReqAvgWeeklyEffortCharts" style="width:100%;max-width:700px">
                 <script type ="text/javascript">
                     var projID = localStorage.getItem("currentProject");
@@ -349,18 +352,327 @@
                 </script>
             </div>
 
-            <br><br><br>
+            <br><br><br><br><br>
 
             <h2>Effort Towards Non-Functional Requirements (in Person-Hours)</h2>
 
-            <input class="nfReq_effort_display_option" name="nfReq_effort_display_option" id="nfReq_total_option" type="radio" checked>&nbsp;&nbsp;Total Effort&nbsp;&nbsp;&nbsp;&nbsp;</input>
-            <input class="nfReq_effort_display_option" name="nfReq_effort_display_option" id="nfReq_average_daily_option" type="radio">&nbsp;&nbsp;Average Daily Effort&nbsp;&nbsp;&nbsp;&nbsp;</input>
-            <input class="nfReq_effort_display_option" name="nfReq_effort_display_option" id="nfReq_average_weekly_option" type="radio">&nbsp;&nbsp;Average Weekly Effort&nbsp;&nbsp;&nbsp;&nbsp;</input>
+            <br>
 
-            <div class="reqCharts" id="nfReqCharts">
-                <script type="text/javascript">
+            <h3 class="heading3">Total</h3>
 
+            <br>
+
+            <!--Graphs of Total Person Hours for all Non-Functional Requirements-->
+            <div class="reqCharts" id="nfReqTotalEffortCharts" style="width:100%;max-width:700px">
+                <script type ="text/javascript">
+                    var projID = localStorage.getItem("currentProject");
+                    var projectList = JSON.parse(localStorage.getItem("projectList"));
+                    var nfReqList = [];
+                    var nfReqEffortTrackingEntries = [];
+                    var nfReqTotals = [];
+                    
+                    projectList.forEach(function(p){
+                        if(projID == p.name) {
+                            nfReqList = p.non_functional_reqs;
+                        }
+                    });
+
+                    for(let i = 0; i < nfReqList.length; i++) {
+                        const div = document.getElementById('nfReqTotalEffortCharts');
+                            const lineBreak = document.createElement('br');
+                            var canvasID = "NFTcanvas-" + nfReqList[i].id;
+
+                            var canvas = document.createElement('canvas');
+                            canvas.setAttribute('class', 'nfReqChartCanvas');
+                            canvas.setAttribute('id', canvasID);
+                            canvas.setAttribute('style', 'width:100%;max-width:700px');
+                            canvas.style.backgroundColor = "rgb(33, 33, 33)";
+
+                            div.appendChild(lineBreak);
+                            div.appendChild(canvas);
+
+                            nfReqEffortTrackingEntries = nfReqList[i].effortTrackingEntries;
+
+                            var yValues = [];
+                            var totalRA = 0, totalDes = 0, totalCo = 0, totalTes = 0, totalPM = 0;
+
+                            for(let j = 0; j < nfReqEffortTrackingEntries.length; j++) {
+                                totalRA += Number(nfReqEffortTrackingEntries[j].reqAnalysisHours);
+                                totalDes += Number(nfReqEffortTrackingEntries[j].designingHours);
+                                totalCo += Number(nfReqEffortTrackingEntries[j].codingHours);
+                                totalTes += Number(nfReqEffortTrackingEntries[j].testingHours);
+                                totalPM += Number(nfReqEffortTrackingEntries[j].projManagementHours);
+                            }   
+
+                            yValues.push(totalRA); yValues.push(totalDes); yValues.push(totalCo);
+                            yValues.push(totalTes); yValues.push(totalPM);
+
+                            nfReqTotals[i] = yValues;
+                    }
+
+                    for (let i = 0; i < nfReqList.length; i++) {
+                        canvasID = "NFTcanvas-" + nfReqList[i].id;
+
+                        var data = {
+                            labels: xVals,
+                            datasets: [{
+                                backgroundColor: barColors,
+                                data: nfReqTotals[i],
+                            }]
+                        };
+
+                        var config = {
+                            type: "bar",
+                            data: data,
+                            options: {
+                                plugins: {
+                                    title: {
+                                        display: true,
+                                        text: nfReqList[i].value,
+                                        color: "white",
+                                        font: {
+                                            size: 20
+                                        }
+                                    },
+                                    legend: {
+                                        display: false
+                                    },
+                                    scales: {
+                                        y: {
+                                            ticks: {
+                                                color: "white"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        };
+
+                        var chart = new Chart(
+                            document.getElementById(canvasID),
+                            config
+                        )
+                    }
                 </script>
+            </div>
+
+            <br><br><br><br>
+
+            <h3 class="heading3">Average Daily</h3>
+
+            <br>
+
+            <!--Graphs of Average Daily Person Hours for all Non-Functional Requirements-->
+            <div class="reqCharts" id="nfReqAvgDailyEffortCharts" style="width:100%;max-width:700px">
+                <script type ="text/javascript">
+                    var projID = localStorage.getItem("currentProject");
+                    var projectList = JSON.parse(localStorage.getItem("projectList"));
+                    var nfReqList = [];
+                    var nfReqEffortTrackingEntries = [];
+                    var nfReqTotals = [];
+                    
+                    projectList.forEach(function(p){
+                        if(projID == p.name) {
+                            nfReqList = p.non_functional_reqs;
+                        }
+                    });
+
+                    for(let i = 0; i < nfReqList.length; i++) {
+                        const div = document.getElementById('nfReqAvgDailyEffortCharts');
+                            const lineBreak = document.createElement('br');
+                            var canvasID = "NFDcanvas-" + nfReqList[i].id;
+
+                            var canvas = document.createElement('canvas');
+                            canvas.setAttribute('class', 'nfReqChartCanvas');
+                            canvas.setAttribute('id', canvasID);
+                            canvas.setAttribute('style', 'width:100%;max-width:700px');
+                            canvas.style.backgroundColor = "rgb(33, 33, 33)";
+
+                            div.appendChild(lineBreak);
+                            div.appendChild(canvas);
+
+                            nfReqEffortTrackingEntries = nfReqList[i].effortTrackingEntries;
+
+                            var yValues = [];
+                            var totalRA_d = 0, totalDes_d = 0, totalCo_d = 0, totalTes_d = 0, totalPM_d = 0;
+                            var avgRA_d = 0, avgDes_d = 0, avgCo_d = 0, avgTes_d = 0, avgPM_d = 0;
+                            var dailyCount = 0;
+    
+                            for(let j = 0; j < nfReqEffortTrackingEntries.length; j++) {
+                                if (nfReqEffortTrackingEntries[j].time == "daily"){
+                                    dailyCount++;
+                                    totalRA_d += Number(nfReqEffortTrackingEntries[j].reqAnalysisHours);
+                                    totalDes_d += Number(nfReqEffortTrackingEntries[j].designingHours);
+                                    totalCo_d += Number(nfReqEffortTrackingEntries[j].codingHours);
+                                    totalTes_d += Number(nfReqEffortTrackingEntries[j].testingHours);
+                                    totalPM_d += Number(nfReqEffortTrackingEntries[j].projManagementHours);
+                                }
+                            }
+    
+                            avgRA_d = totalRA_d / dailyCount; avgDes_d = totalDes_d / dailyCount; avgCo_d = totalCo_d / dailyCount;
+                            avgTes_d = totalTes_d / dailyCount; avgPM_d = totalPM_d / dailyCount;
+    
+                            yValues.push(avgRA_d); yValues.push(avgDes_d); yValues.push(avgCo_d);
+                            yValues.push(avgTes_d); yValues.push(avgPM_d);
+    
+                            nfReqTotals[i] = yValues;
+                    }
+
+                    for (let i = 0; i < nfReqList.length; i++) {
+                        canvasID = "NFDcanvas-" + nfReqList[i].id;
+
+                        var data = {
+                            labels: xVals,
+                            datasets: [{
+                                backgroundColor: barColors,
+                                data: nfReqTotals[i],
+                            }]
+                        };
+
+                        var config = {
+                            type: "bar",
+                            data: data,
+                            options: {
+                                plugins: {
+                                    title: {
+                                        display: true,
+                                        text: nfReqList[i].value,
+                                        color: "white",
+                                        font: {
+                                            size: 20
+                                        }
+                                    },
+                                    legend: {
+                                        display: false
+                                    },
+                                    scales: {
+                                        y: {
+                                            ticks: {
+                                                color: "white"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        };
+
+                        var chart = new Chart(
+                            document.getElementById(canvasID),
+                            config
+                        )
+                    }
+                </script>
+            </div>
+
+            <br><br><br><br>
+
+            <h3 class="heading3">Average Weekly</h3>
+
+            <br>
+
+            <!--Graphs of Average Weekly Person Hours for all Non-Functional Requirements-->
+            <div class="reqCharts" id="nfReqAvgWeeklyEffortCharts" style="width:100%;max-width:700px">
+                <script type ="text/javascript">
+                    var projID = localStorage.getItem("currentProject");
+                    var projectList = JSON.parse(localStorage.getItem("projectList"));
+                    var nfReqList = [];
+                    var nfReqEffortTrackingEntries = [];
+                    var nfReqTotals = [];
+                    
+                    projectList.forEach(function(p){
+                        if(projID == p.name) {
+                            nfReqList = p.non_functional_reqs;
+                        }
+                    });
+
+                    for(let i = 0; i < nfReqList.length; i++) {
+                        const div = document.getElementById('nfReqAvgWeeklyEffortCharts');
+                            const lineBreak = document.createElement('br');
+                            var canvasID = "NFWcanvas-" + nfReqList[i].id;
+
+                            var canvas = document.createElement('canvas');
+                            canvas.setAttribute('class', 'nfReqChartCanvas');
+                            canvas.setAttribute('id', canvasID);
+                            canvas.setAttribute('style', 'width:100%;max-width:700px');
+                            canvas.style.backgroundColor = "rgb(33, 33, 33)";
+
+                            div.appendChild(lineBreak);
+                            div.appendChild(canvas);
+
+                            nfReqEffortTrackingEntries = nfReqList[i].effortTrackingEntries;
+
+                            var yValues = [];
+                            var totalRA_w = 0, totalDes_w = 0, totalCo_w = 0, totalTes_w = 0, totalPM_w = 0;
+                            var avgRA_w = 0, avgDes_w = 0, avgCo_w = 0, avgTes_w = 0, avgPM_w = 0;
+                            var weeklyCount = 0;
+    
+                            for(let j = 0; j < nfReqEffortTrackingEntries.length; j++) {
+                                if(nfReqEffortTrackingEntries[j].time == "weekly") {
+                                    weeklyCount++;
+                                    totalRA_w += Number(nfReqEffortTrackingEntries[j].reqAnalysisHours);
+                                    totalDes_w += Number(nfReqEffortTrackingEntries[j].designingHours);
+                                    totalCo_w += Number(nfReqEffortTrackingEntries[j].codingHours);
+                                    totalTes_w += Number(nfReqEffortTrackingEntries[j].testingHours);
+                                    totalPM_w += Number(nfReqEffortTrackingEntries[j].projManagementHours);
+                                }
+                            }   
+    
+                            avgRA_w = totalRA_w / weeklyCount; avgDes_w = totalDes_w / weeklyCount; avgCo_w = totalCo_w / weeklyCount;
+                            avgTes_w = totalTes_w / weeklyCount; avgPM_w = totalPM_w / weeklyCount;
+    
+                            yValues.push(avgRA_w); yValues.push(avgDes_w); yValues.push(avgCo_w);
+                            yValues.push(avgTes_w); yValues.push(avgPM_w);
+    
+                            nfReqTotals[i] = yValues;
+                    }
+
+                    for (let i = 0; i < nfReqList.length; i++) {
+                        canvasID = "NFWcanvas-" + nfReqList[i].id;
+
+                        var data = {
+                            labels: xVals,
+                            datasets: [{
+                                backgroundColor: barColors,
+                                data: nfReqTotals[i],
+                            }]
+                        };
+
+                        var config = {
+                            type: "bar",
+                            data: data,
+                            options: {
+                                plugins: {
+                                    title: {
+                                        display: true,
+                                        text: nfReqList[i].value,
+                                        color: "white",
+                                        font: {
+                                            size: 20
+                                        }
+                                    },
+                                    legend: {
+                                        display: false
+                                    },
+                                    scales: {
+                                        y: {
+                                            ticks: {
+                                                color: "white"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        };
+
+                        var chart = new Chart(
+                            document.getElementById(canvasID),
+                            config
+                        )
+                    }
+                </script>
+
+                <br><br><br>
+
             </div>
         </div>
     </body>
