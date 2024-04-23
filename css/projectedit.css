@@ -120,7 +120,6 @@ input[type="text"], textarea{
     color: white;
     border-radius: 10px;
     border: none;
-    width: 25%;
 }
 
 /* text input vary in width based on type */
@@ -179,6 +178,10 @@ button:hover {
 
 .delete_li {
     margin-left: 15%;
+}
+
+#req-body .delete_li {
+    margin-left: 17.5%;
 }
 
 .confirm {
