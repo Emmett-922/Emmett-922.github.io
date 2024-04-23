@@ -75,6 +75,7 @@ ul {
     list-style: none;
     display: inline;
     font-family: 'Gill Sans', 'Gill Sans MT', 'Trebuchet MS', sans-serif;
+    padding-inline-start: 0px;
     overflow: hidden;
 }
 
