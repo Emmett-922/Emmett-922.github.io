@@ -34,10 +34,11 @@
         <div class="display_section">
             <h2>Effort Towards Functional Requirements (in Person-Hours)</h2>
 
-            <input class="fReq_effort_display_option" name="fReq_effort_display_option" id="fReq_total_option" type="radio">&nbsp;&nbsp;Total Effort&nbsp;&nbsp;&nbsp;&nbsp;</input>
-            <input class="fReq_effort_display_option" name="fReq_effort_display_option" id="fReq_average_daily_option" type="radio">&nbsp;&nbsp;Average Daily Effort&nbsp;&nbsp;&nbsp;&nbsp;</input>
-            <input class="fReq_effort_display_option" name="fReq_effort_display_option" id="fReq_average_weekly_option" type="radio">&nbsp;&nbsp;Average Weekly Effort&nbsp;&nbsp;&nbsp;&nbsp;</input>
+            <br>
 
+            <h3 class="heading3">Total</h3>
+
+            <br>
 
             <div class="reqCharts" id="fReqTotalEffortCharts" style="width:100%;max-width:700px">
                 <script type="text/javascript">
@@ -48,7 +49,6 @@
                     var fReqTotals = [];
                     const xVals = ["Req Analysis", "Designing", "Coding", "Testing", "Proj. Management"];
                     const barColors = ["orangered", "rgb(61, 61, 61)","orangered","rgb(61, 61, 61)","orangered"];
-                    var yValues = [];
                     var hasEffortDetails = false;
                     
                     projectList.forEach(function(p){
@@ -77,7 +77,7 @@
                             div.appendChild(lineBreak);
                             div.appendChild(canvas);
 
-                        
+                            var yValues = [];
                             var totalRA = 0, totalDes = 0, totalCo = 0, totalTes = 0, totalPM = 0;
                             var totalRA_d = '', totalDes_d = '', totalCo_d = '', totalTes_d = '', totalPM_d = '';
                             var totalRA_w = '', totalDes_w = '', totalCo_w = '', totalTes_w = '', totalPM_w = '';
@@ -96,12 +96,13 @@
                             yValues.push(totalRA); yValues.push(totalDes); yValues.push(totalCo);
                             yValues.push(totalTes); yValues.push(totalPM);
 
-                            fReqTotals.push(yValues);
+                            fReqTotals[i] = yValues;
                         }
                     }
 
                     for (let i = 0; i < fReqList.length; i++) {
                         canvasID = "canvas-" + fReqList[i].id;
+                        console.log(fReqTotals);
 
                         var data = {
                             labels: xVals,
@@ -172,6 +173,16 @@
                     }
 
                 </script>
+            </div>
+
+            <br><br>
+
+            <h3 class="heading3">Average Daily</h3>
+
+            <br>
+
+            <div class="reqCharts" id="fReqAvgDailyEffortCharts" style="width:100%;max-width:700px">
+                
             </div>
 
             <br><br><br>
