@@ -84,8 +84,13 @@ ul {
 }
 
 /* remove style from link and input lists */
-ol.project-list, form ol{
+ol.project-list, form ol {
     list-style-type: none;
+}
+
+/* add extra space above requirements lists */
+ol[id~="req-list"] {
+    margin-top: 5px;
 }
 
 /* give list items better spacing for readability */
@@ -110,7 +115,6 @@ li a:hover {
 /* all labels use the same rules */
 label {
     font-size: 20px;
-    margin-bottom: 10px;
 }
 
 /* all text input uses multiple shared rules */
