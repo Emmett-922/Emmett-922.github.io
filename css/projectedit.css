@@ -141,6 +141,14 @@ input[type="text"]:hover, textarea:hover {
     background-color: rgb(70, 70, 70);
 }
 
+/* give radio buttons similar rules to input list items */
+input[type="radio"] {
+    padding: 5px;
+    margin-top: 5px;
+    margin-left: 30px;
+    padding-bottom: 10px;
+}
+
 /***   BUTTON RULES   ***/
 /* all buttons use the same color/font rules */
 button {
