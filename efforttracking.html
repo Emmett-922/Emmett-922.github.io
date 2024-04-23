@@ -40,26 +40,109 @@
                     var projID = localStorage.getItem("currentProject");
                     var projectList = JSON.parse(localStorage.getItem("projectList"));
                     var fReqList = [];
+                    var fReqEffortTrackingEntries = [];
 
                     
                     projectList.forEach(function(p){
                         if(projID == p.name) {
                             fReqList = p.functional_reqs;
-                            for(let i = 0; i < fReqList.length; i++) {
-                                const div = document.getElementById('fReqCharts');
-                                var canvasID = "canvas-f-req-" + i;
-                                console.log(canvasID);
-
-                                var canvas = document.createElement('canvas');
-                                canvas.setAttribute('class', 'fReqChartCanvas');
-                                canvas.setAttribute('id', canvasID);
-                                canvas.setAttribute('style', 'width:100%;max-width:700px');
-
-                                div.appendChild(canvas);
-                            }
                         }
                     });
+
+                    document.getElementById("fReq_total_option").onclick = function(){
+                        for(let i = 0; i < fReqList.length; i++) {
+                            const div = document.getElementById('fReqCharts');
+                            var canvasID = "canvas-" + fReqList[i].id;
+                            console.log(canvasID);
+
+                            var canvas = document.createElement('canvas');
+                            canvas.setAttribute('class', 'fReqChartCanvas');
+                            canvas.setAttribute('id', canvasID);
+                            canvas.setAttribute('style', 'width:100%;max-width:700px');
+
+                            div.appendChild(canvas);
+
+                            fReqEffortTrackingEntries = fReqList[i].effortTrackingEntries;
+                            const xVals = ["Req Analysis", "Designing", "Coding", "Testing", "Proj. Management"];
+                            const barColors = ["red", "green","blue","orange","brown"];
+                            var yValues = [];
+                            var totalRA, totalDes, totalCo, totalTes, totalPM;
+                            var totalRA_d, totalDes_d, totalCo_d, totalTes_d, totalPM_d;
+                            var totalRA_w, totalDes_w, totalCo_w, totalTes_w, totalPM_w;
+                            var avgRA_d, avgDes_d, avgCo_d, avgTes_d, avgPM_d;
+                            var avgRA_w, avgDes_w, avgCo_w, avgTes_w, avgPM_w;
+                            var dailyCount, weeklyCount;
+
+                            for(let j = 0; j < fReqEffortTrackingEntries.length; j++) {
+                                if(fReqEffortTrackingEntries[i].timeBasis == "daily"){
+                                    dailyCount++;
+                                    totalRA_d += fReqEffortTrackingEntries[i].reqAnalysisHours;
+                                    totalDes_d += fReqEffortTrackingEntries[i].designingHours;
+                                    totalCo_d += fReqEffortTrackingEntries[i].codingHours;
+                                    totalTes_d += fReqEffortTrackingEntries[i].testingHours;
+                                    totalPM_d += fReqEffortTrackingEntries[i].projManagementHours;
+                                }
+                                else if(fReqEffortTrackingEntries[i].timeBasis == "weekly") {
+                                    weeklyCount++;
+                                    totalRA_w += fReqEffortTrackingEntries[i].reqAnalysisHours;
+                                    totalDes_w += fReqEffortTrackingEntries[i].designingHours;
+                                    totalCo_w += fReqEffortTrackingEntries[i].codingHours;
+                                    totalTes_w += fReqEffortTrackingEntries[i].testingHours;
+                                    totalPM_w += fReqEffortTrackingEntries[i].projManagementHours;
+                                }
+
+                                totalRA += fReqEffortTrackingEntries[i].reqAnalysisHours;
+                                totalDes += fReqEffortTrackingEntries[i].designingHours;
+                                totalCo += fReqEffortTrackingEntries[i].codingHours;
+                                totalTes += fReqEffortTrackingEntries[i].codingHours;
+                                totalPM += fReqEffortTrackingEntries[i].projManagementHours;
+                            }
+
+                            avgRA_d += totalRA_d / dailyCount;
+                            avgDes_d += totalDes_d / dailyCount;
+                            avgCo_d += totalCo_d / dailyCount;
+                            avgTes_d += totalTes_d / dailyCount;
+                            avgPM_d += totalPM_d / dailyCount;
+
+                            avgRA_w += totalRA_w / weeklyCount;
+                            avgDes_w += totalDes_w / weeklyCount;
+                            avgCo_w += totalCo_w / weeklyCount;
+                            avgTes_w += totalTes_w / weeklyCount;
+                            avgPM_w += totalPM_w / weeklyCount;
+
+                            yValues.push(totalRA); yValues.push(totalDes); yValues.push(totalCo);
+                            yValues.push(totalTes); yValues.push(totalPM);
+
+                            var fReqChart = new CanvasJS.Chart(canvasID, {
+                                backgroundColor: "white",
+                                type: "bar",
+                                data: {
+                                    labels: xVals,
+                                    datasets: [{
+                                        backgroundColor: barColors,
+                                        data: yValues
+                                    }]
+                                },
+                                title: {
+                                    display: true,
+                                    text: fReqList[i].value
+                                }
+                            });
+
+                            fReqChart.render();
+                        }
+                    }
+
                     
+                    document.getElementById("fReq_average_daily_option").onclick = function(){
+                        yValues.push(avgRA_d); yValues.push(avgDes_d); yValues.push(avgCo_d);
+                        yValues.push(avgTes_d); yValues.push(avgPM_d);
+                    }
+                    document.getElementById("fReq_average_weekly_option").onclick = function(){
+                        yValues.push(avgRA_w); yValues.push(avgDes_w); yValues.push(avgCo_w);
+                        yValues.push(avgTes_w); yValues.push(avgPM_w);
+                    }
+
                 </script>
             </div>
 
@@ -73,7 +156,7 @@
 
             <div class="reqCharts" id="nfReqCharts">
                 <script type="text/javascript">
-                    
+
                 </script>
             </div>
         </div>
@@ -85,3 +168,5 @@
         location.href = "efforttrackingdetails.html";
     }
 </script>
+
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
