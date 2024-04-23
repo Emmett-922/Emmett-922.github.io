@@ -180,7 +180,7 @@ button:hover {
 }
 
 /* some buttons have unique positioning rules */
-.create_new_button, .edit_mode {
+.create_new_button, .edit_mode, .enter_details {
     margin-right: 10%;
     float: right;
 }
