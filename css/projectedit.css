@@ -89,7 +89,7 @@ ol.project-list, form ol {
 }
 
 /* add extra space above requirements lists */
-ol[id~="req-list"] {
+ol[id$="req-list"] {
     margin-top: 5px;
 }
 
