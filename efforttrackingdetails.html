@@ -220,11 +220,11 @@
         let efforttrackingdetailsEntry = {
             time: timeBasis,
             id: entryID,
-            reqAnalysisHours: document.getElementById("req_analysis_input").value,
-            designingHours: document.getElementById("designing_input").value,
-            codingHours: document.getElementById("coding_input").value,
-            testingHours: document.getElementById("testing_input").value,
-            projManagementHours: document.getElementById("proj_management_input").value
+            reqAnalysisHours: Number(document.getElementById("req_analysis_input").value),
+            designingHours: Number(document.getElementById("designing_input").value),
+            codingHours: Number(document.getElementById("coding_input").value),
+            testingHours: Number(document.getElementById("testing_input").value),
+            projManagementHours: Number(document.getElementById("proj_management_input").value) 
         }
 
         projectList.forEach(function(p){
