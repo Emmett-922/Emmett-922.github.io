@@ -179,13 +179,13 @@ button:hover {
 }
 
 /* some buttons have unique positioning rules */
-.create_new_button, .edit_mode, .enter_details {
+.create_new_button, .enter_details {
     margin-right: 10%;
     float: right;
 }
 
-.create_new_button, .edit_mode, .enter_details {
-    margin-right: 10%;
+.edit_mode {
+    margin-right: 20%;
     float: right;
 }
 
