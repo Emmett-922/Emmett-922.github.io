@@ -216,6 +216,10 @@ button:hover {
 
 /* CHART RULES */
 /* center the charts to improve layout */
+div.req_charts {
+    width: 100%;
+}
+
 canvas {
     margin: auto;
 }

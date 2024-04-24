@@ -40,7 +40,7 @@
             <br>
 
             <!--Graphs of Total Person Hours for all Functional Requirements-->
-            <div class="reqCharts" id="fReqTotalEffortCharts" style="width:100%;max-width:700px">
+            <div class="req_charts" id="f_req_total_effort_charts">
                 <script type ="text/javascript">
                     var projID = localStorage.getItem("currentProject");
                     var projectList = JSON.parse(localStorage.getItem("projectList"));
@@ -57,7 +57,7 @@
                     });
 
                     for(let i = 0; i < fReqList.length; i++) {
-                        const div = document.getElementById('fReqTotalEffortCharts');
+                        const div = document.getElementById('f_req_total_effort_charts');
                             const lineBreak = document.createElement('br');
                             var canvasID = "FTcanvas-" + fReqList[i].id;
 
@@ -150,7 +150,7 @@
             <br>
 
             <!--Graphs of Average Daily Person Hours for all Functional Requirements-->
-            <div class="reqCharts" id="fReqAvgDailyEffortCharts" style="width:100%;max-width:700px">
+            <div class="req_charts" id="f_req_avg_daily_effort_charts">
                 <script type ="text/javascript">
                     var projID = localStorage.getItem("currentProject");
                     var projectList = JSON.parse(localStorage.getItem("projectList"));
@@ -165,7 +165,7 @@
                     });
     
                     for(let i = 0; i < fReqList.length; i++) {
-                        const div = document.getElementById('fReqAvgDailyEffortCharts');
+                        const div = document.getElementById('f_req_avg_daily_effort_charts');
                             const lineBreak = document.createElement('br');
                             var canvasID = "FAcanvas-" + fReqList[i].id;
     
@@ -266,7 +266,7 @@
             <br>
 
             <!--Graphs of Average Weekly Person Hours for all Functional Requirements-->
-            <div class="reqCharts" id="fReqAvgWeeklyEffortCharts" style="width:100%;max-width:700px">
+            <div class="req_charts" id="f_req_avg_weekly_effort_charts">
                 <script type ="text/javascript">
                     var projID = localStorage.getItem("currentProject");
                     var projectList = JSON.parse(localStorage.getItem("projectList"));
@@ -281,7 +281,7 @@
                     });
     
                     for(let i = 0; i < fReqList.length; i++) {
-                        const div = document.getElementById('fReqAvgWeeklyEffortCharts');
+                        const div = document.getElementById('f_req_avg_weekly_effort_charts');
                             const lineBreak = document.createElement('br');
                             var canvasID = "FWcanvas-" + fReqList[i].id;
     
@@ -386,7 +386,7 @@
             <br>
 
             <!--Graphs of Total Person Hours for all Non-Functional Requirements-->
-            <div class="reqCharts" id="nfReqTotalEffortCharts" style="width:100%;max-width:700px">
+            <div class="req_charts" id="nf_req_total_effort_charts">
                 <script type ="text/javascript">
                     var projID = localStorage.getItem("currentProject");
                     var projectList = JSON.parse(localStorage.getItem("projectList"));
@@ -401,7 +401,7 @@
                     });
 
                     for(let i = 0; i < nfReqList.length; i++) {
-                        const div = document.getElementById('nfReqTotalEffortCharts');
+                        const div = document.getElementById('nf_req_total_effort_charts');
                             const lineBreak = document.createElement('br');
                             var canvasID = "NFTcanvas-" + nfReqList[i].id;
 
@@ -494,7 +494,7 @@
             <br>
 
             <!--Graphs of Average Daily Person Hours for all Non-Functional Requirements-->
-            <div class="reqCharts" id="nfReqAvgDailyEffortCharts" style="width:100%;max-width:700px">
+            <div class="req_charts" id="nf_req_avg_daily_effort_charts">
                 <script type ="text/javascript">
                     var projID = localStorage.getItem("currentProject");
                     var projectList = JSON.parse(localStorage.getItem("projectList"));
@@ -509,7 +509,7 @@
                     });
 
                     for(let i = 0; i < nfReqList.length; i++) {
-                        const div = document.getElementById('nfReqAvgDailyEffortCharts');
+                        const div = document.getElementById('nf_req_avg_daily_effort_charts');
                             const lineBreak = document.createElement('br');
                             var canvasID = "NFDcanvas-" + nfReqList[i].id;
 
@@ -610,7 +610,7 @@
             <br>
 
             <!--Graphs of Average Weekly Person Hours for all Non-Functional Requirements-->
-            <div class="reqCharts" id="nfReqAvgWeeklyEffortCharts" style="width:100%;max-width:700px">
+            <div class="req_charts" id="nf_req_avg_weekly_effort_charts">
                 <script type ="text/javascript">
                     var projID = localStorage.getItem("currentProject");
                     var projectList = JSON.parse(localStorage.getItem("projectList"));
@@ -625,7 +625,7 @@
                     });
 
                     for(let i = 0; i < nfReqList.length; i++) {
-                        const div = document.getElementById('nfReqAvgWeeklyEffortCharts');
+                        const div = document.getElementById('nf_req_avg_weekly_effort_charts');
                             const lineBreak = document.createElement('br');
                             var canvasID = "NFWcanvas-" + nfReqList[i].id;
 
