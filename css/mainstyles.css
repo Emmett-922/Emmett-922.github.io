@@ -64,7 +64,7 @@ h3 {
 }
 
 /* give requirements body 10% margins on either side. width is edited in case of % values being used on internal elements */
-#req-body, .display_section {
+.home-body #req-body, .display_section {
     margin-left: 10%;
     width: 80%;
 }
@@ -179,6 +179,11 @@ button:hover {
 }
 
 /* some buttons have unique positioning rules */
+.create_new_button, .edit_mode, .enter_details {
+    margin-right: 10%;
+    float: right;
+}
+
 .create_new_button, .edit_mode, .enter_details {
     margin-right: 10%;
     float: right;
