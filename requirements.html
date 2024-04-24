@@ -33,7 +33,7 @@
             <button class="large edit_mode" id="edit_mode_button" onclick="edit_mode()">Edit Requirements</button>
         </div>
 		
-        <br><br>
+        <br><br><br>
 
 		<div class="req-body" id="req-body">
             <label class="fReqs">Functional Requirements:</label>
@@ -50,6 +50,10 @@
                             numOfFunctionalReqs = p.numOfFunctionalReqs;
                         }
                     });
+
+                    if(fReqList[0].value == '') {
+                        document.getElementById('f-req-list').style.display = 'none';
+                    }
                     
                     for (let i = 0; i < numOfFunctionalReqs; i++) {
                         var id = "f-req-list" + i;
@@ -178,6 +182,10 @@
                             numOfNonFunctionalReqs = p.numOfNonFunctionalReqs;
                         }
                     });
+
+                    if(nfReqList[0].value == '') {
+                        document.getElementById('nf-req-list').style.display = 'none';
+                    }
                     
                     for (let i = 0; i < numOfNonFunctionalReqs; i++) {
                         var id = "nf-req-list" + i;

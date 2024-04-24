@@ -113,6 +113,10 @@
                         }
                     });
 
+                    if(riskList == '') {
+                        document.getElementById('risk-list').style.display = 'none';
+                    }
+
                     for (let i = 0; i < count; i++) {
                         var id = "risk" + i;
 
