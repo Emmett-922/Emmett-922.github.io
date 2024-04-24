@@ -40,23 +40,23 @@
             <ul class="task_effort_list" id="task_effort_list">
                 <li class="req_analysis" id="req_analysis">Requirement Analysis:
                     <br>
-                    <input class="req_analysis_input" id="req_analysis_input" value=""></input>
+                    <input class="req_analysis_input" id="req_analysis_input" type="text" value=""></input>
                 </li>
                 <li class="designing" id="designing">Designing:
                     <br>
-                    <input class="designing_input" id="designing_input" value=""></input>
+                    <input class="designing_input" id="designing_input" type="text" value=""></input>
                 </li>
                 <li class="coding" id="coding">Coding:
                     <br>
-                    <input class="coding_input" id="coding_input" value=""></input>
+                    <input class="coding_input" id="coding_input" type="text" value=""></input>
                 </li>
                 <li class="testing" id="testing">Testing:
                     <br>
-                    <input class="testing_input" id="testing_input" value=""></input>
+                    <input class="testing_input" id="testing_input" type="text" value=""></input>
                 </li>
                 <li class="proj_management" id="proj_management">Project Management:
                     <br>
-                    <input class="proj_management_input" id="proj_management_input" value=""></input>
+                    <input class="proj_management_input" id="proj_management_input" type="text" value=""></input>
                 </li>
             </ul>
 
@@ -144,6 +144,9 @@
 <script type="text/javascript">
     var timeBasis;
     var isFunctional = null;
+
+    document.getElementById("f_requirements").style.display = "none";
+    document.getElementById("nf_requirements").style.display = "none";
 
     //changing the value of timeBasis per the selected radio button
     document.getElementById("daily_option").onclick = function(){
