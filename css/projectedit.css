@@ -13,11 +13,11 @@ body {
 .navBar{
     background-color: rgb(61, 61, 61);
     overflow: hidden;
-    width: 100%;
+    max-width: 100%;
     box-shadow: 0 2px 4px 0 rgba(0,0,0,.5);
     padding: 15px;
     margin: 0px;
-    display: inline-flex;
+    display: flex;
     align-items: baseline;
 }
 
