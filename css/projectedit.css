@@ -59,13 +59,13 @@ h3 {
 
 /***   BODY RULES   ***/
 /* give project body 20% margins on either side. width is edited in case of % values being used on internal elements */
-#project-body, .display_section {
+#project-body, .details_section, .display_section {
     margin-left: 20%;
     width: 60%;
 }
 
 /* give requirements body 10% margins on either side. width is edited in case of % values being used on internal elements */
-#req-body, .details_section {
+#req-body {
     margin-left: 10%;
     width: 80%;
 }
@@ -212,4 +212,10 @@ button:hover {
 .delete_project {
     margin-right: 20%;
     float: right;
+}
+
+/* CHART RULES */
+/* center the charts to improve layout */
+*[class$="canvas"] {
+    margin: auto;
 }
