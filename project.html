@@ -14,7 +14,6 @@
                     <a href="index.html">Home</a>
                     <a href="project.html">Project Home</a>
                     <a href="requirements.html">Requirements</a>
-                    <a href="projectedit.html">Edit Project</a>
                     <a href="efforttracking.html">Effort Tracking</a>
                 </li>
             </ul>
@@ -30,8 +29,18 @@
             projectName.innerHTML = projID;
             document.body.appendChild(projectName);
         </script>
-		
-        <br><br>
+
+        <div class="pageHeader">
+            <button class="large edit_mode" id="edit_mode_button" onclick="proj_edit()">Edit Project Details</button>
+        </div>
+
+        <script type="text/javascript">
+            function proj_edit(){
+                location.href = "projectedit.html";
+            }
+        </script>
+
+        <br><br><br>
 
 		<div class="project-body" id="project-body">
             <h3>Project Description&#58;</h3>
