@@ -216,6 +216,6 @@ button:hover {
 
 /* CHART RULES */
 /* center the charts to improve layout */
-*[class$="Canvas"] {
+canvas {
     margin: auto;
 }
